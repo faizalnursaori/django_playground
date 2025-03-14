@@ -37,12 +37,7 @@
 </head>
 
 <body>
-  <div class="sidebar">
-    <h2>Admin Panel</h2>
-    <a href="{% url 'dashboard_home' %}">Dashboard</a>
-    <a href="{% url 'dashboard_orders' %}">Orders</a>
-    <a href="{% url 'dashboard_profile' %}">Profile</a>
-  </div>
+  {% include "dashboard/dashboard_sidebar.html" %}
 
   <div class="main-content">
     <div class="navbar">
@@ -55,6 +50,8 @@
       </div>
     </div>
   </div>
+
+  {% include "dashboard/dashboard_footer.html" %}
 </body>
 
 </html>
