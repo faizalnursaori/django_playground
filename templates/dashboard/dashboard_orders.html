@@ -1,1 +1,26 @@
 {% extends "dashboard/dashboard_base.html" %}
+
+{% block title %} Orders - Admin {% endblock %}
+
+{% block header %} Orders List {% endblock %}
+
+{% block content %}
+<h3>Recent Order</h3>
+<table border="1" width="100%">
+  <tr>
+    <th>Order ID</th>
+    <th>Customer</th>
+    <th>Status</th>
+  </tr>
+  <tr>
+    <td>001</td>
+    <td>John Doe</td>
+    <td>Completed</td>
+  </tr>
+  <tr>
+    <td>002</td>
+    <td>John Smith</td>
+    <td>Pending</td>
+  </tr>
+</table>
+{% endblock %}
