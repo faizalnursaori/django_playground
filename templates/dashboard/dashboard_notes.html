@@ -7,8 +7,7 @@
 {% block content %}
 {% for note in notes %}
 <div>
-  <h2>{{note.title}}</h2>
-  <p>{{note.content}}</p>
+  <a href="{% url 'notes_detail_view' note.id %}">{{note.title}}</a>
 </div>
 {% endfor %}
 {% endblock %}

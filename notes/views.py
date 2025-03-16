@@ -16,5 +16,12 @@ def dashboard_notes_view(request):
 
     return render(request, 'dashboard/dashboard_notes.html', context)
 
+def notes_detail_view(request, id):
+    notes = Notes.objects.get(id=id)
+    context = {
+        "notes": notes
+    }
+    return render(request, 'dashboard/notes_details.html', context)
+
 def dashboard_profile_view(request):
     return render(request, 'dashboard/dashboard_profile.html')
