@@ -1,5 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import Notes
+from django.views import View
+
+class NotesView(View):
+    def get(self, request):
+        notes = Notes.objects.all()
+        context = {
+            "notes": notes
+        }
+
+        return render(request, 'dashboard/dashboard_notes.html', context)
+
+    def post(self, request):
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+
+        print(f"Title: {title}, Content: {content}")
+        return redirect('dashboard_notes')
 
 # Create your views here.
 def dashboard_home_view(request):
@@ -8,13 +25,13 @@ def dashboard_home_view(request):
 def dashboard_orders_view(request):
     return render(request, 'dashboard/dashboard_orders.html')
 
-def dashboard_notes_view(request):
-    notes = Notes.objects.all()
-    context = {
-        "notes": notes
-    }
+# def dashboard_notes_view(request):
+#     notes = Notes.objects.all()
+#     context = {
+#         "notes": notes
+#     }
 
-    return render(request, 'dashboard/dashboard_notes.html', context)
+#     return render(request, 'dashboard/dashboard_notes.html', context)
 
 def notes_detail_view(request, id):
     notes = Notes.objects.get(id=id)

@@ -10,4 +10,10 @@
   <a href="{% url 'notes_detail_view' note.id %}">{{note.title}}</a>
 </div>
 {% endfor %}
+<form method="post" action="">
+  {% csrf_token %}
+  <input name="title" type="text" placeholder="Input Title">
+  <textarea name="content" placeholder="Input Content"></textarea>
+  <button>Create Notes</button>
+</form>
 {% endblock %}
