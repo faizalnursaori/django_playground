@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from .models import Notes
+from django.contrib import messages
 from django.views import View
 
 class NotesView(View):
@@ -15,7 +16,12 @@ class NotesView(View):
         title = request.POST.get('title')
         content = request.POST.get('content')
 
-        print(f"Title: {title}, Content: {content}")
+        if title and content:
+            Notes.objects.create(title=title, content=content)
+            messages.success(request, "Succes add notes")
+        else:
+            messages.error(request, "Title and Content are required")
+
         return redirect('dashboard_notes')
 
 # Create your views here.
