@@ -23,13 +23,33 @@ class NotesView(View):
             messages.error(request, "Title and Content are required")
 
         return redirect('dashboard_notes')
+    
+class DetailView(View):
+    def get(self, request, id):
+        notes = Notes.objects.get(id=id)
+        context = {
+        "notes": notes
+        }
+        return render(request, 'dashboard/notes_details.html', context)
 
+class HomeView(View):
+    def get(self, request):
+        return render(request, 'dashboard/dashboard_home.html')
+
+
+class OrdersView(View):
+    def get(self, request):
+        return render(request, 'dashboard/dashboard_orders.html')
+    
+class ProfileView(View):
+    def get(self, request):
+        return render(request, 'dashboard/dashboard_profile.html')    
 # Create your views here.
-def dashboard_home_view(request):
-    return render(request, 'dashboard/dashboard_home.html')
+# def dashboard_home_view(request):
+#     return render(request, 'dashboard/dashboard_home.html')
 
-def dashboard_orders_view(request):
-    return render(request, 'dashboard/dashboard_orders.html')
+# def dashboard_orders_view(request):
+#     return render(request, 'dashboard/dashboard_orders.html')
 
 # def dashboard_notes_view(request):
 #     notes = Notes.objects.all()
@@ -39,12 +59,12 @@ def dashboard_orders_view(request):
 
 #     return render(request, 'dashboard/dashboard_notes.html', context)
 
-def notes_detail_view(request, id):
-    notes = Notes.objects.get(id=id)
-    context = {
-        "notes": notes
-    }
-    return render(request, 'dashboard/notes_details.html', context)
+# def notes_detail_view(request, id):
+#     notes = Notes.objects.get(id=id)
+#     context = {
+#         "notes": notes
+#     }
+#     return render(request, 'dashboard/notes_details.html', context)
 
-def dashboard_profile_view(request):
-    return render(request, 'dashboard/dashboard_profile.html')
+# def dashboard_profile_view(request):
+#     return render(request, 'dashboard/dashboard_profile.html')
