@@ -1,4 +1,4 @@
-{% load static %}<!-- load static file -->
+{% load static %} <!-- Load static file -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,54 +6,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %} Admin Dashboard {% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'main.css' %}"> <!-- Static file path best practice -->
-  <style>
-    body {
-      display: flex;
-      font-family: Arial, Helvetica, sans-serif;
-      margin: 0;
-    }
-
-    .sidebar a {
-      /* color: white; */
-      text-decoration: none;
-      display: block;
-      padding: 10px;
-    }
-
-    .sidebar a:hover {
-      background-color: #555;
-    }
-
-    .main-content {
-      flex-grow: 1;
-      padding: 20px;
-    }
-
-    .navbar {
-      background: #007bff;
-      color: white;
-      text-align: center;
-    }
-  </style>
+  <link rel="stylesheet" href="{% static 'output.css' %}"> <!-- Static file path best practice -->
 </head>
 
-<body>
-  {% include "dashboard/dashboard_sidebar.html" %}
+<body class="bg-gray-100 flex min-h-screen">
 
-  <div class="main-content">
-    <div class="navbar">
-      <h2>{% block header %} Dashboard {% endblock %}</h2>
+  <aside class="w-64 bg-gray-800 text-white min-h-screen p-5">
+    {% include "dashboard/dashboard_sidebar.html" %}
+  </aside>
 
-      <div>
-        {% block content %}
+  <div class="flex-1 flex flex-col">
 
-        {% endblock %}
-      </div>
-    </div>
+    <nav class="bg-blue-600 text-white py-4 px-6 shadow-md">
+      <h2 class="text-2xl font-bold">{% block header %} Dashboard {% endblock %}</h2>
+    </nav>
+
+    <main class="flex-1 p-6">
+      {% block content %}
+      {% endblock %}
+    </main>
+
+    <footer class="bg-gray-200 text-center py-4 text-gray-600">
+      {% include "dashboard/dashboard_footer.html" %}
+    </footer>
+
   </div>
 
-  {% include "dashboard/dashboard_footer.html" %}
 </body>
 
 </html>
