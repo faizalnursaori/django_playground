@@ -9,4 +9,8 @@
   <h2>{{notes.title}}</h2>
   <p>{{notes.content}}</p>
 </div>
+<form method="post" action="{% url 'delete' notes.id %}">
+  {% csrf_token %}
+  <button>Delete</button>
+</form>
 {% endblock %}

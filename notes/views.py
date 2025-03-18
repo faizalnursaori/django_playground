@@ -32,6 +32,13 @@ class DetailView(View):
         }
         return render(request, 'dashboard/notes_details.html', context)
 
+class DeleteView(View):
+    def post(self, request, id):
+        notes = Notes.objects.get(id=id)
+        notes.delete()
+        
+        return redirect('dashboard_notes')
+
 class HomeView(View):
     def get(self, request):
         return render(request, 'dashboard/dashboard_home.html')
