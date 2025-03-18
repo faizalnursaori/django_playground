@@ -8,6 +8,7 @@
 <div>
   <h2>{{notes.title}}</h2>
   <p>{{notes.content}}</p>
+  <a href="{% url 'update' notes.id %}">Update</a>
 </div>
 <form method="post" action="{% url 'delete' notes.id %}">
   {% csrf_token %}

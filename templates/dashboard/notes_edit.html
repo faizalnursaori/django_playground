@@ -1,0 +1,21 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}
+Notes - Edit
+{% endblock %}
+
+{% block header %}
+Edit Notes
+{% endblock %}
+
+{% block content %}
+<form method="post" action="">
+  {% csrf_token %}
+  <input name="title" type="text" placeholder="Input Title" value="{{notes.title}}" />
+  <textarea name="content" placeholder="Input Content">{{notes.content}}</textarea>
+  <button>Edit Notes</button>
+  {% for message in messages %}
+  <div>{{ message }}</div>
+  {% endfor %}
+</form>
+{% endblock %}

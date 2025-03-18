@@ -28,7 +28,7 @@ class DetailView(View):
     def get(self, request, id):
         notes = Notes.objects.get(id=id)
         context = {
-        "notes": notes
+            "notes": notes
         }
         return render(request, 'dashboard/notes_details.html', context)
 
@@ -36,6 +36,26 @@ class DeleteView(View):
     def post(self, request, id):
         notes = Notes.objects.get(id=id)
         notes.delete()
+        
+        return redirect('dashboard_notes')
+
+class UpdateView(View):
+    def get(self, request, id):
+        notes = Notes.objects.get(id=id)
+        context ={
+            "notes": notes
+        }
+        return render(request, 'dashboard/notes_edit.html', context)
+    
+    def post(self, request, id):
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+
+        notes = Notes.objects.get(id=id)
+
+        notes.title = title
+        notes.content = content
+        notes.save()
         
         return redirect('dashboard_notes')
 
