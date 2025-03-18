@@ -16,12 +16,19 @@ class NotesView(View):
         title = request.POST.get('title')
         content = request.POST.get('content')
 
-        if title and content:
-            Notes.objects.create(title=title, content=content)
-            messages.success(request, "Succes add notes")
-        else:
-            messages.error(request, "Title and Content are required")
-
+        if not title or not content:
+            messages.error(request, "Title and Content are Required")
+            context={
+                "notes": Notes.objects.all(),
+                "form_data":{
+                    "title": title,
+                    "content": content
+                }
+            }
+            return render(request, "dashboard/dashboard_notes.html", context)
+    
+        Notes.objects.create(title=title, content=content)
+        messages.success(request, "Notes Added")
         return redirect('dashboard_notes')
     
 class DetailView(View):
@@ -36,28 +43,54 @@ class DeleteView(View):
     def post(self, request, id):
         notes = Notes.objects.get(id=id)
         notes.delete()
+        messages.success(request, "Succes delete notes")
         
         return redirect('dashboard_notes')
 
 class UpdateView(View):
     def get(self, request, id):
-        notes = Notes.objects.get(id=id)
-        context ={
-            "notes": notes
-        }
-        return render(request, 'dashboard/notes_edit.html', context)
+        try:
+            notes = Notes.objects.get(id=id)
+            context = {
+                "notes": notes
+            }
+            return render(request, 'dashboard/notes_edit.html', context)
+        except Notes.DoesNotExist:
+            messages.error(request, "Notes not found")
+            return redirect('dashboard_notes')
     
     def post(self, request, id):
-        title = request.POST.get('title')
-        content = request.POST.get('content')
-
-        notes = Notes.objects.get(id=id)
-
-        notes.title = title
-        notes.content = content
-        notes.save()
+        try:
+            notes = Notes.objects.get(id=id)
+            
+            # Ambil nilai dari form
+            title = request.POST.get('title')
+            content = request.POST.get('content')
+            
+            # Periksa validasi
+            if not title or not content:
+                messages.error(request, "Title and Content are required")
+                # Gunakan objek yang TIDAK disimpan ke database dengan nilai dari form
+                context = {
+                    "notes": {
+                        "id": id,
+                        "title": title or "",  # Gunakan nilai input atau string kosong
+                        "content": content or "",  # Gunakan nilai input atau string kosong
+                    }
+                }
+                return render(request, 'dashboard/notes_edit.html', context)
+            
+            # Jika valid, simpan ke database
+            notes.title = title
+            notes.content = content
+            notes.save()
+            messages.success(request, "Success update notes")
+            return redirect('dashboard_notes')
+            
+        except Notes.DoesNotExist:
+            messages.error(request, "Notes not found")
+            return redirect('dashboard_notes')
         
-        return redirect('dashboard_notes')
 
 class HomeView(View):
     def get(self, request):
