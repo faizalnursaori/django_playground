@@ -2,10 +2,13 @@ from django.shortcuts import redirect, render
 from .models import Notes
 from django.contrib import messages
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class NotesView(View):
+class NotesView(LoginRequiredMixin, View):
+    login_url = '/login'
+
     def get(self, request):
-        notes = Notes.objects.all()
+        notes = Notes.objects.filter(actor=request.user)
         context = {
             "notes": notes
         }
@@ -27,7 +30,7 @@ class NotesView(View):
             }
             return render(request, "dashboard/dashboard_notes.html", context)
     
-        Notes.objects.create(title=title, content=content)
+        Notes.objects.create(title=title, content=content, actor=request.user)
         messages.success(request, "Notes Added")
         return redirect('dashboard_notes')
     

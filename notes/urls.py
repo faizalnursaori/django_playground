@@ -8,5 +8,5 @@ urlpatterns = [
     path('profile/', ProfileView.as_view(), name='dashboard_profile'),
     path('notes/<str:id>', DetailView.as_view(), name='notes_detail_view'),
     path('notes/<str:id>/delete/', DeleteView.as_view(), name='delete'),
-    path('notes/<str:id>/update/', UpdateView.as_view(), name='update')
+    path('notes/<str:id>/update/', UpdateView.as_view(), name='update'),
 ]
